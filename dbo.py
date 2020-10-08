@@ -38,3 +38,13 @@ class Alunos:
         dados_aluno.email = row[2]
 
         return dados_aluno
+
+    def insert_aluno(aluno):       
+        cursor.execute("insert into Aluno values(?, ?, ?)", aluno.ra, aluno.nome, aluno.email)
+        conn.commit()
+
+    def edit_aluno(aluno):
+        cursor.execute("update Aluno set nome = ?, email = ? where ra = ?", aluno.nome, aluno.email, aluno.ra)
+        
+    def remove_aluno(ra):
+        cursor.execute("delete from Aluno where ra = ?", ra)

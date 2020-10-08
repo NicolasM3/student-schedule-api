@@ -1,4 +1,4 @@
-class Alunos:
+class Aluno:
     def __init__(self):
         self.__ra = None
         self.__nome = None
@@ -27,3 +27,8 @@ class Alunos:
     @email.setter
     def email(self, value):
         self.__email = value
+
+    def as_dict(self):
+        dictionary = {"ra":self.__ra,"nome":self.__nome,"email":self.__email}
+
+        return dictionary

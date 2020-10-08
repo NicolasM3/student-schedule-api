@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from gevent.pywsgi import WSGIServer
-from alunos import Alunos
-import pyodbc
+from alunos import Aluno
+from dbo import Alunos
 import logging
 
 LOG_FORMAT = "%(levelname)s : %(filename)s : %(asctime)s : %(message)s"
@@ -11,17 +11,6 @@ logging.basicConfig(filename=".logs/ApiLogs",
                     filemode= "w")
 logger = logging.getLogger()
 
-username = "BD19170"
-password = ""
-
-conn = pyodbc.connect('Driver={SQL Server};'
-                    'Server=regulus.cotuca.unicamp.br;'
-                    'DATABASE=BD19170;'
-                    'UID='+username+
-                    ';PWD='+password)
-
-cursor = conn.cursor()
-
 app = Flask(__name__)
 
 @app.route("/alunos", methods=["GET"])
@@ -29,31 +18,17 @@ def get_all_alunos():
 
     logger.info("Entrou get_all_alunos()")
 
-    cursor.execute('SELECT * FROM Aluno')
-    list_alunos = []
-
-    for row in cursor:
-        dados_aluno = Alunos()
-        dados_aluno.ra = row[0]
-        dados_aluno.nome = row[1]
-        dados_aluno.email = row[2]
-        list_alunos.append(dados_aluno.__dict__)
+    list_alunos = Alunos.get_all()
 
     return jsonify(list_alunos)
 
 @app.route("/alunos/<ra>", methods=["GET"])
-def get_alunos(ra):
-    logger.info("Entrou get_all_alunos()")
+def get_aluno(ra):
+    logger.info(f"Entrou get_aluno({ra})")
 
-    cursor.execute('SELECT * FROM Aluno where RA =' + ra)
-    row = cursor.fetchone()
+    dados_aluno = Alunos.get_aluno(ra)
 
-    dados_aluno = Alunos()
-    dados_aluno.ra = row[0]
-    dados_aluno.nome = row[1]
-    dados_aluno.email = row[2]
-
-    return jsonify(dados_aluno.__dict__)
+    return jsonify(dados_aluno.as_dict())
 
 @app.route("/alunos", methods=["POST"])
 def post_alunos():

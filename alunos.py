@@ -6,7 +6,7 @@ class Alunos:
 
     @property
     def ra(self):
-        return self.ra
+        return self.__ra
 
     @ra.setter
     def ra(self, value):
@@ -14,7 +14,7 @@ class Alunos:
 
     @property
     def nome(self):
-        return self.nome
+        return self.__nome
 
     @nome.setter
     def nome(self, value):
@@ -22,7 +22,7 @@ class Alunos:
 
     @property
     def email(self):
-        return self.email
+        return self.__email
 
     @email.setter
     def email(self, value):

@@ -32,37 +32,30 @@ def get_aluno(ra):
 
 @app.route("/alunos", methods=["POST"])
 def post_alunos():
-    data = request.json[0]
+    data = request.json
     
     dados_aluno = Aluno()
     dados_aluno.ra = data["ra"]
     dados_aluno.nome = data["nome"]
     dados_aluno.email = data["email"]
 
-    Alunos.insert_aluno(dados_aluno)
-
-    return "nada"
+    return jsonify(Alunos.insert_aluno(dados_aluno))
 
 @app.route("/alunos", methods=["PUT"])
 def put_Alunos():
 
-    data = request.json[0]
+    data = request.json
     
     dados_aluno = Aluno()
     dados_aluno.ra = data["ra"]
     dados_aluno.nome = data["nome"]
     dados_aluno.email = data["email"]
 
-    Alunos.edit_aluno(dados_aluno)
-
-    return "nada"
+    return jsonify(Alunos.edit_aluno(dados_aluno))
 
 @app.route("/alunos/<ra>", methods=["DELETE"])
 def remove_Alunos(ra):
-
-    Alunos.remove_aluno(ra)
-
-    return "nada"
+    return jsonify(Alunos.remove_aluno(ra))
 
 if __name__ == '__main__':
     # Debug/Development

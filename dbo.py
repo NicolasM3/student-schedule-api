@@ -2,7 +2,7 @@ import pyodbc
 from alunos import Aluno
 
 username = "BD19170"
-password = ""
+password = "BD19170"
 
 conn = pyodbc.connect('Driver={SQL Server};'
                     'Server=regulus.cotuca.unicamp.br;'
@@ -28,23 +28,60 @@ class Alunos:
         return list_alunos
 
     def get_aluno(ra):
-        cursor.execute('SELECT * FROM Aluno where ra =' + ra)
+
+        cursor.execute('SELECT * FROM Aluno where ra =?', ra)
 
         row = cursor.fetchone()
 
         dados_aluno = Aluno()
+
+        if (row is None):
+            return dados_aluno
+        
         dados_aluno.ra = row[0]
         dados_aluno.nome = row[1]
         dados_aluno.email = row[2]
 
         return dados_aluno
 
-    def insert_aluno(aluno):       
+    def insert_aluno(aluno):
+
+        if(len(aluno.ra) > 5):
+            return {"message" : "Error: Request Entity Too Large", "code": 413}
+
+        cursor.execute('SELECT * FROM Aluno where ra =?', aluno.ra)
+
+        row = cursor.fetchone()
+
+        if (row is not None):
+            return {"message" : "Error: Already in the DataBase", "code": 409}
+
         cursor.execute("insert into Aluno values(?, ?, ?)", aluno.ra, aluno.nome, aluno.email)
         conn.commit()
 
+        return {"message" : "Post Sucessful", "code": 200}
+
     def edit_aluno(aluno):
+
+        if(len(aluno.ra) > 5):
+            return {"message" : "Error: Request Entity Too Large", "code": 413}
+
+        cursor.execute('SELECT * FROM Aluno where ra = ? ', aluno.ra)
+
+        row = cursor.fetchone()
+
+        if (row is None):
+            return {"message" : "Error: Not Found", "code": 404}
+
         cursor.execute("update Aluno set nome = ?, email = ? where ra = ?", aluno.nome, aluno.email, aluno.ra)
+
+        return {"message" : "Put Sucessful", "code": 200}
         
     def remove_aluno(ra):
+
+        if(len(ra) > 5):
+            return {"message" : "Error: Request Entity Too Large", "code": 413}
+
         cursor.execute("delete from Aluno where ra = ?", ra)
+
+        return {"message" : "Remove Sucessful", "code": 200}

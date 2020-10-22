@@ -13,7 +13,7 @@ logger = logging.getLogger()
 
 app = Flask(__name__)
 
-@app.route("/alunos", methods=["GET"])
+@app.route("/alunos/", methods=["GET"])
 def get_all_alunos():
 
     logger.info("Entrou get_all_alunos()")
@@ -24,7 +24,7 @@ def get_all_alunos():
 
 @app.route("/alunos/<ra>", methods=["GET"])
 def get_aluno(ra):
-    logger.info(f"Entrou get_aluno({ra})")
+    #logger.info(f"Entrou get_aluno({ra})")
 
     dados_aluno = Alunos.get_aluno(ra)
 
@@ -59,9 +59,9 @@ def remove_Alunos(ra):
 
 if __name__ == '__main__':
     # Debug/Development
-    # app.run(debug=True, host="0.0.0.0", port="5000")
+    # app.run(host="192.168.0.4", port="5000")
     # Production
     logger.info("Server running - localhost:5000")
     print("Server running - localhost:5000")
-    http_server = WSGIServer(('', 5000), app)
+    http_server = WSGIServer(('192.168.0.4', 5000), app)
     http_server.serve_forever()

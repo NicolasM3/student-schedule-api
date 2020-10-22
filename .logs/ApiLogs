@@ -1,1 +1,9 @@
-INFO : rotas.py : 2020-10-08 08:39:51,614 : Server running - localhost:5000
+INFO : rotas.py : 2020-10-22 12:17:53,068 : Server running - localhost:5000
+INFO : rotas.py : 2020-10-22 12:18:19,479 : Entrou get_all_alunos()
+INFO : rotas.py : 2020-10-22 12:19:58,056 : Entrou get_all_alunos()
+INFO : rotas.py : 2020-10-22 12:20:53,430 : Entrou get_all_alunos()
+INFO : rotas.py : 2020-10-22 12:21:28,396 : Entrou get_all_alunos()
+INFO : rotas.py : 2020-10-22 12:45:56,712 : Entrou get_all_alunos()
+INFO : rotas.py : 2020-10-22 12:45:59,050 : Entrou get_all_alunos()
+INFO : rotas.py : 2020-10-22 12:45:59,377 : Entrou get_all_alunos()
+INFO : rotas.py : 2020-10-22 12:48:34,119 : Entrou get_all_alunos()

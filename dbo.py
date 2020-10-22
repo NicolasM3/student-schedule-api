@@ -46,7 +46,7 @@ class Alunos:
 
     def insert_aluno(aluno):
 
-        if(len(aluno.ra) > 5):
+        if(len(str(aluno.ra)) > 5):
             return {"message" : "Error: Request Entity Too Large", "code": 413}
 
         cursor.execute('SELECT * FROM Aluno where ra =?', aluno.ra)
@@ -63,7 +63,7 @@ class Alunos:
 
     def edit_aluno(aluno):
 
-        if(len(aluno.ra) > 5):
+        if(len(str(aluno.ra)) > 5):
             return {"message" : "Error: Request Entity Too Large", "code": 413}
 
         cursor.execute('SELECT * FROM Aluno where ra = ? ', aluno.ra)
@@ -74,14 +74,16 @@ class Alunos:
             return {"message" : "Error: Not Found", "code": 404}
 
         cursor.execute("update Aluno set nome = ?, email = ? where ra = ?", aluno.nome, aluno.email, aluno.ra)
+        conn.commit()
 
         return {"message" : "Put Sucessful", "code": 200}
         
     def remove_aluno(ra):
 
-        if(len(ra) > 5):
+        if(len(str(ra)) > 5):
             return {"message" : "Error: Request Entity Too Large", "code": 413}
 
         cursor.execute("delete from Aluno where ra = ?", ra)
+        conn.commit()
 
         return {"message" : "Remove Sucessful", "code": 200}

@@ -59,9 +59,9 @@ def remove_Alunos(ra):
 
 if __name__ == '__main__':
     # Debug/Development
-    # app.run(debug=True, host="0.0.0.0", port="5000")
+    # app.run(debug=True, host="192.168.1.141", port="5000")
     # Production
     logger.info("Server running - localhost:5000")
     print("Server running - localhost:5000")
-    http_server = WSGIServer(('', 5000), app)
+    http_server = WSGIServer(('192.168.1.141', 5000), app)
     http_server.serve_forever()

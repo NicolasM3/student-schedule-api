@@ -73,7 +73,16 @@ class Alunos:
         if (row is None):
             return {"message" : "Error: Not Found", "code": 404}
 
+        if(aluno.nome == None):
+            aluno.nome = row[1]
+
+        if(aluno.email == None):
+            aluno.email = row[2]
+
+        print(aluno.as_dict())
+
         cursor.execute("update Aluno set nome = ?, email = ? where ra = ?", aluno.nome, aluno.email, aluno.ra)
+        conn.commit()
 
         return {"message" : "Put Sucessful", "code": 200}
         
@@ -83,5 +92,6 @@ class Alunos:
             return {"message" : "Error: Request Entity Too Large", "code": 413}
 
         cursor.execute("delete from Aluno where ra = ?", ra)
+        conn.commit()
 
         return {"message" : "Remove Sucessful", "code": 200}

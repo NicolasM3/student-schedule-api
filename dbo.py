@@ -79,11 +79,14 @@ class Alunos:
         return {"message" : "Put Sucessful", "code": 200}
         
     def remove_aluno(ra):
+        dados_aluno = Aluno()
 
         if(len(str(ra)) > 5):
             return {"message" : "Error: Request Entity Too Large", "code": 413}
 
+        dados_aluno = Alunos.get_aluno(ra)
+
         cursor.execute("delete from Aluno where ra = ?", ra)
         conn.commit()
 
-        return {"message" : "Remove Sucessful", "code": 200}
+        return(dados_aluno)

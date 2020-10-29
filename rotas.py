@@ -55,7 +55,7 @@ def put_Alunos():
 
 @app.route("/alunos/<ra>", methods=["DELETE"])
 def remove_Alunos(ra):
-    return jsonify(Alunos.remove_aluno(ra))
+    return jsonify(Alunos.remove_aluno(ra).as_dict())
 
 if __name__ == '__main__':
     # Debug/Development
